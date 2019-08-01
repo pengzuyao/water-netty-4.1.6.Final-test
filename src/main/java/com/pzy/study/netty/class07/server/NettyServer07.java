@@ -29,8 +29,6 @@ public class NettyServer07 {
                         ch.pipeline().addLast(new ServerHandler07());
                     }
                 });
-
-
         bind(serverBootstrap, PORT);
     }
 

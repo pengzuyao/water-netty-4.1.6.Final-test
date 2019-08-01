@@ -1,5 +1,8 @@
 package com.pzy.study.netty.class07.client;
 
+import com.pzy.study.netty.class07.protocol.PacketCodeC07;
+import com.pzy.study.netty.class07.protocol.request.MessageRequestPacket07;
+import com.pzy.study.netty.class07.util.LoginUtil07;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -9,10 +12,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import the.flash.protocol.PacketCodeC;
-import the.flash.protocol.request.MessageRequestPacket;
-import the.flash.util.LoginUtil;
-
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author 闪电侠
  */
-public class NettyClient {
+public class NettyClient07 {
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 8000;
@@ -69,14 +68,14 @@ public class NettyClient {
     private static void startConsoleThread(Channel channel) {
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                if (LoginUtil.hasLogin(channel)) {
+                if (LoginUtil07.hasLogin(channel)) {
                     System.out.println("输入消息发送至服务端: ");
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
 
-                    MessageRequestPacket packet = new MessageRequestPacket();
+                    MessageRequestPacket07 packet = new MessageRequestPacket07();
                     packet.setMessage(line);
-                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
+                    ByteBuf byteBuf = PacketCodeC07.INSTANCE.encode(channel.alloc(), packet);
                     channel.writeAndFlush(byteBuf);
                 }
             }
