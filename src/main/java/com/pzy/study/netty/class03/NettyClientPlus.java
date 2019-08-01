@@ -49,7 +49,6 @@ public class NettyClientPlus {
                         connect(bootstrap, "127.0.0.1", 8000, 5);
                     }
                 }).channel();
-        channel.close();
 
         while (true) {
             channel.writeAndFlush(new Date() + ":hello netty!");
