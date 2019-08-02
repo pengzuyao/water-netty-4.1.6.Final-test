@@ -7,8 +7,7 @@ import com.pzy.study.netty.class06.serialize.impl.JSONSerializer06;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
-import static com.pzy.study.netty.class06.protocol.command.Command06.LOGIN_REQUEST;
-import static com.pzy.study.netty.class06.protocol.command.Command06.LOGIN_RESPONSE;
+import static com.pzy.study.netty.class06.protocol.command.Command06.*;
 
 import java.util.Map;
 

@@ -1,5 +1,9 @@
-package com.pzy.study.netty.class07.server;
+package com.pzy.study.netty.class08.server;
 
+import com.pzy.study.netty.class08.codec.PacketDecoder;
+import com.pzy.study.netty.class08.codec.PacketEncoder;
+import com.pzy.study.netty.class08.server.handler.LoginRequestHandler;
+import com.pzy.study.netty.class08.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -9,7 +13,12 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Date;
 
-public class NettyServer07 {
+/**
+ * @Description:
+ * @Author: pengzuyao
+ * @Time: 2019/08/02
+ */
+public class NettyServer {
 
     private static final int PORT = 8000;
 
@@ -27,9 +36,14 @@ public class NettyServer07 {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new ServerHandler07());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
+
+
         bind(serverBootstrap, PORT);
     }
 
