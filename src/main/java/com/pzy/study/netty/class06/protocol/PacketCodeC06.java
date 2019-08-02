@@ -24,8 +24,12 @@ public class PacketCodeC06 {
     private final Map<Byte, Class<? extends Packet06>> packetTypeMap;
     private final Map<Byte, Serializer06> serializerMap;
 
-    public static class Instance{
-        public static PacketCodeC06 getInstance = new PacketCodeC06();
+    public static class PacketCode06Holder{
+        public static PacketCodeC06 instance = new PacketCodeC06();
+    }
+
+    public static PacketCodeC06 getInstance(){
+        return PacketCode06Holder.instance;
     }
 
     private PacketCodeC06(){

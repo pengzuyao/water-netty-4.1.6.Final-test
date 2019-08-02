@@ -28,7 +28,7 @@ public class ClientHandler06 extends ChannelInboundHandlerAdapter {
         loginRequestPacket06.setUsername("pzy");
         loginRequestPacket06.setPassword("123456");
         // 编码
-        ByteBuf buffer = PacketCodeC06.Instance.getInstance.encode(ctx.alloc(), loginRequestPacket06);
+        ByteBuf buffer = PacketCodeC06.getInstance().encode(ctx.alloc(), loginRequestPacket06);
         // 写数据
         ctx.channel().writeAndFlush(buffer);
     }
@@ -36,12 +36,9 @@ public class ClientHandler06 extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
-
-        Packet06 packet06 = PacketCodeC06.Instance.getInstance.decode(byteBuf);
-
+        Packet06 packet06 = PacketCodeC06.getInstance().decode(byteBuf);
         if (packet06 instanceof LoginResponsePacket06) {
             LoginResponsePacket06 loginResponsePacket06 = (LoginResponsePacket06) packet06;
-
             if (loginResponsePacket06.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
             } else {

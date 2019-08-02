@@ -22,7 +22,7 @@ public class ServerHandler06 extends ChannelInboundHandlerAdapter {
         System.out.println(new Date() + ": 客户端开始登录……");
         ByteBuf requestByteBuf = (ByteBuf) msg;
 
-        Packet06 packet06 = PacketCodeC06.Instance.getInstance.decode(requestByteBuf);
+        Packet06 packet06 = PacketCodeC06.getInstance().decode(requestByteBuf);
 
         if (packet06 instanceof LoginRequestPacket06) {
             // 登录流程
@@ -39,7 +39,7 @@ public class ServerHandler06 extends ChannelInboundHandlerAdapter {
                 System.out.println(new Date() + ": 登录失败!");
             }
             // 登录响应
-            ByteBuf responseByteBuf = PacketCodeC06.Instance.getInstance.encode(ctx.alloc(), loginResponsePacket06);
+            ByteBuf responseByteBuf = PacketCodeC06.getInstance().encode(ctx.alloc(), loginResponsePacket06);
             ctx.channel().writeAndFlush(responseByteBuf);
         }
     }
