@@ -12,11 +12,11 @@ import io.netty.util.Attribute;
 public class LoginUtil {
 
     public static void markAsLogin(Channel channel) {
-        channel.attr(Attributes.LOGIN).set(true);
+        channel.attr(Attributes.SESSION).set();
     }
 
     public static boolean hasLogin(Channel channel) {
-        Attribute<Boolean> loginAttr = channel.attr(Attributes.LOGIN);
+        //Attribute<Boolean> loginAttr = channel.attr(Attributes.LOGIN);
 
         return loginAttr.get() != null;
     }
