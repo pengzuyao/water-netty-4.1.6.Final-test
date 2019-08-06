@@ -18,15 +18,16 @@ import java.util.UUID;
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket){
         System.out.println(new Date() + ":收到客户端登陆请求。。。");
-
         LoginResponsePacket loginResponsePacket= new LoginResponsePacket();
         loginResponsePacket.setVersion(loginRequestPacket.getVersion());
         loginResponsePacket.setUserName(loginRequestPacket.getUsername());
+
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
             String userId = randomUserId();
+            loginResponsePacket.setUserId(userId);
             System.out.println("[" + loginRequestPacket.getUsername() + "]登录成功");
             SessionUtil.bindSession(new Session(userId ,loginRequestPacket.getUsername()) , ctx.channel());
         } else {

@@ -16,6 +16,8 @@ import static com.pzy.study.netty.class08.protocol.command.Command.*;
 @AllArgsConstructor
 public class MessageRequestPacket extends Packet {
 
+    private String toUserId;
+
     private String message;
 
     @Override

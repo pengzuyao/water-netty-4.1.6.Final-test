@@ -13,6 +13,10 @@ import static com.pzy.study.netty.class08.protocol.command.Command.*;
 @Data
 public class MessageResponsePacket extends Packet {
 
+    private String fromUserId;
+
+    private String fromUserName;
+
     private String message;
 
     @Override

@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: pengzuyao
  * @Time: 2019/08/02
  */
-public class NettyClient {
+public class NettyClient2 {
 
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";

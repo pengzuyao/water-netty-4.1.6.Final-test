@@ -1,16 +1,14 @@
 package com.pzy.study.netty.class08.client.handler;
 
 
-import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
+
 import com.pzy.study.netty.class08.protocol.request.LoginResponsePacket;
 import com.pzy.study.netty.class08.session.Session;
-import com.pzy.study.netty.class08.util.LoginUtil;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @Description:
@@ -19,7 +17,7 @@ import java.util.UUID;
  */
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
 
-    @Override
+   /* @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
         // 创建登录对象
@@ -30,18 +28,18 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
 
         // 写数据
         ctx.channel().writeAndFlush(loginRequestPacket);
-    }
+    }*/
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, LoginResponsePacket loginResponsePacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket loginResponsePacket) throws Exception {
         String userId = loginResponsePacket.getUserId();
         String userName = loginResponsePacket.getUserName();
         if (loginResponsePacket.isSuccess()) {
             System.out.println(new Date() + ": 客户端登录成功");
             System.out.println("[" + userName + "]登录成功 ， userId 为" + loginResponsePacket.getUserId());
-            SessionUtil.bindSession(new Session(userId ,userName) ,channelHandlerContext.channel());
+            SessionUtil.bindSession(new Session(userId ,userName) ,ctx.channel());
         } else {
-            System.out.println(new Date() + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
+            System.out.println("["+ userName + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
         }
     }
 

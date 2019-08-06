@@ -4,7 +4,6 @@ import com.pzy.study.netty.class08.codec.PacketDecoder;
 import com.pzy.study.netty.class08.codec.PacketEncoder;
 import com.pzy.study.netty.class08.codec.Spliter;
 import com.pzy.study.netty.class08.server.handler.AuthHandler;
-import com.pzy.study.netty.class08.server.handler.FirstServerHandler;
 import com.pzy.study.netty.class08.server.handler.LoginRequestHandler;
 import com.pzy.study.netty.class08.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -26,12 +25,12 @@ public class NettyServer {
     private static final int PORT = 8000;
 
     public static void main(String[] args) {
-        NioEventLoopGroup boosGroup = new NioEventLoopGroup();
+        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
 
         final ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap
-                .group(boosGroup, workerGroup)
+                .group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024)
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
