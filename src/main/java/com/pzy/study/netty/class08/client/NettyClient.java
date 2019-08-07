@@ -1,12 +1,17 @@
 package com.pzy.study.netty.class08.client;
 
+import com.pzy.study.netty.class08.client.console.ConsoleCommand;
+import com.pzy.study.netty.class08.client.console.ConsoleCommandManager;
+import com.pzy.study.netty.class08.client.handler.CreateGroupResponseHandler;
 import com.pzy.study.netty.class08.client.handler.LoginResponseHandler;
+import com.pzy.study.netty.class08.client.handler.LogoutResponseHandler;
 import com.pzy.study.netty.class08.client.handler.MessageResponseHandler;
 import com.pzy.study.netty.class08.codec.PacketDecoder;
 import com.pzy.study.netty.class08.codec.PacketEncoder;
 import com.pzy.study.netty.class08.codec.Spliter;
 import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
-import com.pzy.study.netty.class08.protocol.response.MessageRequestPacket;
+import com.pzy.study.netty.class08.protocol.request.MessageRequestPacket;
+import com.pzy.study.netty.class08.protocol.response.LogoutResponsePacket;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -48,7 +53,9 @@ public class NettyClient {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -75,7 +82,7 @@ public class NettyClient {
     }
 
     private static void startConsoleThread(Channel channel) {
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
 
         new Thread(() -> {
@@ -94,7 +101,10 @@ public class NettyClient {
                     channel.writeAndFlush(new MessageRequestPacket(toUserId ,message));
                 }
             }
-        }).start();
+        }).start();*/
+
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+
     }
 
     private static void waitForLoginResponse() {

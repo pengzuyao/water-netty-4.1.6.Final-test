@@ -1,4 +1,4 @@
-package com.pzy.study.netty.class08.protocol.response;
+package com.pzy.study.netty.class08.protocol.request;
 
 import com.pzy.study.netty.class08.protocol.Packet;
 import lombok.AllArgsConstructor;

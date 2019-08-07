@@ -2,7 +2,7 @@ package com.pzy.study.netty.class08.client.handler;
 
 
 
-import com.pzy.study.netty.class08.protocol.request.LoginResponsePacket;
+import com.pzy.study.netty.class08.protocol.response.LoginResponsePacket;
 import com.pzy.study.netty.class08.session.Session;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;

@@ -6,7 +6,7 @@ import com.pzy.study.netty.class08.codec.PacketDecoder;
 import com.pzy.study.netty.class08.codec.PacketEncoder;
 import com.pzy.study.netty.class08.codec.Spliter;
 import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
-import com.pzy.study.netty.class08.protocol.response.MessageRequestPacket;
+import com.pzy.study.netty.class08.protocol.request.MessageRequestPacket;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -83,7 +83,7 @@ public class NettyClient2 {
                 if (!SessionUtil.hasLogin(channel)) {
                     System.out.print("输入用户名登录: ");
                     String userName = sc.nextLine();
-                    loginRequestPacket.setUsername(userName);
+                    loginRequestPacket.setUserName(userName);
                     //密码使用默认的
                     loginRequestPacket.setPassword("123456");
                     channel.writeAndFlush(loginRequestPacket);

@@ -2,9 +2,9 @@ package com.pzy.study.netty.class08.protocol;
 
 import com.google.common.collect.Maps;
 import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
-import com.pzy.study.netty.class08.protocol.request.LoginResponsePacket;
+import com.pzy.study.netty.class08.protocol.response.LoginResponsePacket;
 import com.pzy.study.netty.class08.protocol.response.MessageResponsePacket;
-import com.pzy.study.netty.class08.protocol.response.MessageRequestPacket;
+import com.pzy.study.netty.class08.protocol.request.MessageRequestPacket;
 import com.pzy.study.netty.class08.serialize.Serializer;
 import com.pzy.study.netty.class08.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
