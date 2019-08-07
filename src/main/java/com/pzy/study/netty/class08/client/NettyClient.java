@@ -1,17 +1,12 @@
 package com.pzy.study.netty.class08.client;
 
-import com.pzy.study.netty.class08.client.console.ConsoleCommand;
+
 import com.pzy.study.netty.class08.client.console.ConsoleCommandManager;
-import com.pzy.study.netty.class08.client.handler.CreateGroupResponseHandler;
-import com.pzy.study.netty.class08.client.handler.LoginResponseHandler;
-import com.pzy.study.netty.class08.client.handler.LogoutResponseHandler;
-import com.pzy.study.netty.class08.client.handler.MessageResponseHandler;
+import com.pzy.study.netty.class08.client.console.LoginConsoleCommand;
+import com.pzy.study.netty.class08.client.handler.*;
 import com.pzy.study.netty.class08.codec.PacketDecoder;
 import com.pzy.study.netty.class08.codec.PacketEncoder;
 import com.pzy.study.netty.class08.codec.Spliter;
-import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
-import com.pzy.study.netty.class08.protocol.request.MessageRequestPacket;
-import com.pzy.study.netty.class08.protocol.response.LogoutResponsePacket;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -52,10 +47,20 @@ public class NettyClient {
                     public void initChannel(SocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
+                        // 登录响应处理器
                         ch.pipeline().addLast(new LoginResponseHandler());
-                        ch.pipeline().addLast(new LogoutResponseHandler());
+                        // 收消息处理器
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        // 创建群响应处理器
                         ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        // 加群响应处理器
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        // 退群响应处理器
+                        ch.pipeline().addLast(new QuitGroupResponseHandler());
+                        // 获取群成员响应处理器
+                        ch.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        // 登出响应处理器
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -104,7 +109,17 @@ public class NettyClient {
         }).start();*/
 
         ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
-
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+        Scanner scanner = new Scanner(System.in);
+        new Thread(()->{
+            while (!Thread.interrupted()){
+                if (!SessionUtil.hasLogin(channel)){
+                    loginConsoleCommand.exec(scanner , channel);
+                }else {
+                    consoleCommandManager.exec(scanner , channel);
+                }
+            }
+        }).start();
     }
 
     private static void waitForLoginResponse() {

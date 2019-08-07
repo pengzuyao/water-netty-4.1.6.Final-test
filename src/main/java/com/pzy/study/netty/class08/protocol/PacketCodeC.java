@@ -1,10 +1,8 @@
 package com.pzy.study.netty.class08.protocol;
 
 import com.google.common.collect.Maps;
-import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
-import com.pzy.study.netty.class08.protocol.response.LoginResponsePacket;
-import com.pzy.study.netty.class08.protocol.response.MessageResponsePacket;
-import com.pzy.study.netty.class08.protocol.request.MessageRequestPacket;
+import com.pzy.study.netty.class08.protocol.request.*;
+import com.pzy.study.netty.class08.protocol.response.*;
 import com.pzy.study.netty.class08.serialize.Serializer;
 import com.pzy.study.netty.class08.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -38,6 +36,16 @@ public class PacketCodeC {
         packetTypeMap.put(LOGIN_RESPONSE , LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST , MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE , MessageResponsePacket.class);
+        packetTypeMap.put(LOGOUT_REQUEST, LogoutRequestPacket.class);
+        packetTypeMap.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        packetTypeMap.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
 
         serializerMap = Maps.newHashMap();
         Serializer serializer = new JSONSerializer();

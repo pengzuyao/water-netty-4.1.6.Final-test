@@ -1,6 +1,10 @@
 package com.pzy.study.netty.class08.client;
 
+import com.pzy.study.netty.class08.client.console.ConsoleCommandManager;
+import com.pzy.study.netty.class08.client.console.LoginConsoleCommand;
+import com.pzy.study.netty.class08.client.handler.CreateGroupResponseHandler;
 import com.pzy.study.netty.class08.client.handler.LoginResponseHandler;
+import com.pzy.study.netty.class08.client.handler.LogoutResponseHandler;
 import com.pzy.study.netty.class08.client.handler.MessageResponseHandler;
 import com.pzy.study.netty.class08.codec.PacketDecoder;
 import com.pzy.study.netty.class08.codec.PacketEncoder;
@@ -48,7 +52,9 @@ public class NettyClient2 {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -75,7 +81,7 @@ public class NettyClient2 {
     }
 
     private static void startConsoleThread(Channel channel) {
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
 
         new Thread(() -> {
@@ -83,7 +89,7 @@ public class NettyClient2 {
                 if (!SessionUtil.hasLogin(channel)) {
                     System.out.print("输入用户名登录: ");
                     String userName = sc.nextLine();
-                    loginRequestPacket.setUserName(userName);
+                    loginRequestPacket.setUsername(userName);
                     //密码使用默认的
                     loginRequestPacket.setPassword("123456");
                     channel.writeAndFlush(loginRequestPacket);
@@ -92,6 +98,19 @@ public class NettyClient2 {
                     String toUserId = sc.next();
                     String message = sc.next();
                     channel.writeAndFlush(new MessageRequestPacket(toUserId ,message));
+                }
+            }
+        }).start();*/
+
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+        Scanner scanner = new Scanner(System.in);
+        new Thread(()->{
+            while (!Thread.interrupted()){
+                if (!SessionUtil.hasLogin(channel)){
+                    loginConsoleCommand.exec(scanner , channel);
+                }else {
+                    consoleCommandManager.exec(scanner , channel);
                 }
             }
         }).start();
