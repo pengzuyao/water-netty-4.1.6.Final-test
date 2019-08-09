@@ -3,6 +3,7 @@ package com.pzy.study.netty.class08.codec;
 import com.pzy.study.netty.class08.protocol.Packet;
 import com.pzy.study.netty.class08.protocol.PacketCodeC;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * Author: pengzuyao
  * Time: 2019-08-08
  */
+@ChannelHandler.Sharable
 public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf , Packet> {
 
     private PacketCodecHandler(){}
