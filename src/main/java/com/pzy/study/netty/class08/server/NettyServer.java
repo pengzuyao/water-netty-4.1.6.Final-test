@@ -1,11 +1,9 @@
 package com.pzy.study.netty.class08.server;
 
-import com.pzy.study.netty.class05.LoginRequestPacket;
+
 import com.pzy.study.netty.class08.codec.PacketCodecHandler;
-import com.pzy.study.netty.class08.codec.PacketDecoder;
-import com.pzy.study.netty.class08.codec.PacketEncoder;
 import com.pzy.study.netty.class08.codec.Spliter;
-import com.pzy.study.netty.class08.protocol.PacketCodeC;
+import com.pzy.study.netty.class08.handler.IMIdleStateHandler;
 import com.pzy.study.netty.class08.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -39,6 +37,7 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) {
+                        ch.pipeline().addLast(new IMIdleStateHandler());
                         ch.pipeline().addLast(new Spliter());
                         /*ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
@@ -50,6 +49,7 @@ public class NettyServer {
                         ch.pipeline().addLast(new PacketEncoder());*/
                         ch.pipeline().addLast(PacketCodecHandler.getInstance());
                         ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                        ch.pipeline().addLast(HeartBeatRequestHandler.INSTANCE);
                         ch.pipeline().addLast(AuthHandler.INSTANCE);
                         ch.pipeline().addLast(IMHandler.getInstance());
                     }
