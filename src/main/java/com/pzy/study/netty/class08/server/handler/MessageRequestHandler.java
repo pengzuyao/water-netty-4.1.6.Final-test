@@ -5,6 +5,7 @@ import com.pzy.study.netty.class08.protocol.response.MessageResponsePacket;
 import com.pzy.study.netty.class08.session.Session;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -13,7 +14,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @Author: pengzuyao
  * @Time: 2019/08/02
  */
+@ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+
+    public static final MessageRequestHandler INSTANCE = new MessageRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) throws Exception {

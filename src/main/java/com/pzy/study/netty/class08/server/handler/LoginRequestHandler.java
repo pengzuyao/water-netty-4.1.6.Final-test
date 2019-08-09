@@ -4,6 +4,7 @@ import com.pzy.study.netty.class08.protocol.request.LoginRequestPacket;
 import com.pzy.study.netty.class08.protocol.response.LoginResponsePacket;
 import com.pzy.study.netty.class08.session.Session;
 import com.pzy.study.netty.class08.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -15,7 +16,10 @@ import java.util.UUID;
  * @Author: pengzuyao
  * @Time: 2019/08/02
  */
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket){

@@ -1,13 +1,14 @@
 package com.pzy.study.netty.class08.server.handler;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.nio.charset.Charset;
 import java.util.Date;
 
-
+@ChannelHandler.Sharable
 public class FirstServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override

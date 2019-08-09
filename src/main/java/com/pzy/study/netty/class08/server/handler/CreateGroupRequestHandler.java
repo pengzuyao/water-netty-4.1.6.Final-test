@@ -5,6 +5,7 @@ import com.pzy.study.netty.class08.protocol.response.CreateGroupResponsePacket;
 import com.pzy.study.netty.class08.util.IDUtil;
 import com.pzy.study.netty.class08.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -13,7 +14,11 @@ import io.netty.channel.group.DefaultChannelGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+
+    public static final GroupMessageRequestHandler INSTANCE = new GroupMessageRequestHandler();
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket createGroupRequestPacket) {
         List<String> userIdList = createGroupRequestPacket.getUserIdList();
